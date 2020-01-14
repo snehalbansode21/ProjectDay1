@@ -1,6 +1,7 @@
 package com.app.pojos;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -10,7 +11,8 @@ public class Event
 {
 	private Integer eventId;
 	private Date eventDate;
-	private int noOfGuests;
+	private int noOfGuestsVeg;
+	private int noOfGuestsNonVeg;
 	private int eventDuration;
 	private double decorationBudget;
 	private boolean theme;
@@ -18,16 +20,24 @@ public class Event
 	private double costWithoutDiscount;
 	private int discount;
 	private double costWithDiscount;
-	public Event()
-	{
-		
+	private User user;
+	private EventDesc eventDesc;
+	private Transaction transaction;
+	private List<FoodSubMenu> foodSbMenuList;
+	private Location loc;
+	private Appointment appoint;
+	private Report report;
+	public Event() {
+		// TODO Auto-generated constructor stub
 	}
 	
-	public Event(Date eventDate, int noOfGuests, int eventDuration, double decorationBudget,
+	
+	public Event(Date eventDate, int noOfGuestsVeg, int noOfGuestsNonVeg, int eventDuration, double decorationBudget,
 			boolean theme, boolean musicSystem, double costWithoutDiscount, int discount, double costWithDiscount) {
 		super();
 		this.eventDate = eventDate;
-		this.noOfGuests = noOfGuests;
+		this.noOfGuestsVeg = noOfGuestsVeg;
+		this.noOfGuestsNonVeg = noOfGuestsNonVeg;
 		this.eventDuration = eventDuration;
 		this.decorationBudget = decorationBudget;
 		this.theme = theme;
@@ -36,6 +46,8 @@ public class Event
 		this.discount = discount;
 		this.costWithDiscount = costWithDiscount;
 	}
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "event_id")
@@ -54,13 +66,27 @@ public class Event
 	public void setEventDate(Date eventDate) {
 		this.eventDate = eventDate;
 	}
-	@Column(name = "no_of_guests")
-	public int getNoOfGuests() {
-		return noOfGuests;
+	@Column(name = "no_of_vegGuests")
+	public int getNoOfGuestsVeg() {
+		return noOfGuestsVeg;
 	}
-	public void setNoOfGuests(int noOfGuests) {
-		this.noOfGuests = noOfGuests;
+
+
+	public void setNoOfGuestsVeg(int noOfGuestsVeg) {
+		this.noOfGuestsVeg = noOfGuestsVeg;
 	}
+
+	@Column(name = "no_of_NonVegGuests")
+	public int getNoOfGuestsNonVeg() {
+		return noOfGuestsNonVeg;
+	}
+
+
+	public void setNoOfGuestsNonVeg(int noOfGuestsNonVeg) {
+		this.noOfGuestsNonVeg = noOfGuestsNonVeg;
+	}
+
+
 	public int getEventDuration() {
 		return eventDuration;
 	}
@@ -105,5 +131,78 @@ public class Event
 	public void setCostWithDiscount(double costWithDiscount) {
 		this.costWithDiscount = costWithDiscount;
 	}
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	@OneToOne
+	@JoinColumn(name = "eventDesc_id")
+	public EventDesc getEventDesc() {
+		return eventDesc;
+	}
+
+	public void setEventDesc(EventDesc eventDesc) {
+		this.eventDesc = eventDesc;
+	}
+	@OneToOne(mappedBy = "event",cascade = CascadeType.ALL)
+	public Transaction getTransaction() {
+		return transaction;
+	}
+
+	public void setTransaction(Transaction transaction) {
+		this.transaction = transaction;
+	}
+	@OneToMany(mappedBy = "event",cascade = CascadeType.ALL)
+	public List<FoodSubMenu> getFoodSbMenuList() {
+		return foodSbMenuList;
+	}
+
+	public void setFoodSbMenuList(List<FoodSubMenu> foodSbMenuList) {
+		this.foodSbMenuList = foodSbMenuList;
+	}
+	@OneToOne
+	@JoinColumn(name = "location_id")
+	public Location getLoc() {
+		return loc;
+	}
+
+	public void setLoc(Location loc) {
+		this.loc = loc;
+	}
+	@OneToOne(mappedBy = "event",cascade = CascadeType.ALL)
+	public Appointment getAppoint() {
+		return appoint;
+	}
+
+	public void setAppoint(Appointment appoint) {
+		this.appoint = appoint;
+	}
+
+	@OneToOne(mappedBy = "event",cascade = CascadeType.ALL)
+	public Report getReport() {
+		return report;
+	}
+
+
+	public void setReport(Report report) {
+		this.report = report;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Event [eventId=" + eventId + ", eventDate=" + eventDate + ", noOfGuestsVeg=" + noOfGuestsVeg
+				+ ", noOfGuestsNonVeg=" + noOfGuestsNonVeg + ", eventDuration=" + eventDuration + ", decorationBudget="
+				+ decorationBudget + ", theme=" + theme + ", musicSystem=" + musicSystem + ", costWithoutDiscount="
+				+ costWithoutDiscount + ", discount=" + discount + ", costWithDiscount=" + costWithDiscount + "]";
+	}
+
+	
+	
 	
 }

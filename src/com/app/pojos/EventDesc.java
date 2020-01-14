@@ -8,14 +8,20 @@ public class EventDesc
 {
 	private Integer eventDescId;
 	private String eventName;
+	private double eventCost;
+	private Event event;
+	private Manager mgr;
 	public EventDesc()
 	{
 		
 	}
-	public EventDesc(String eventName) {
+	
+	public EventDesc(String eventName, double eventCost) {
 		super();
 		this.eventName = eventName;
+		this.eventCost = eventCost;
 	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "eventDesc_id")
@@ -32,10 +38,38 @@ public class EventDesc
 	public void setEventName(String eventName) {
 		this.eventName = eventName;
 	}
+	
+	public double getEventCost() {
+		return eventCost;
+	}
+
+	public void setEventCost(double eventCost) {
+		this.eventCost = eventCost;
+	}
+
+	@OneToOne(mappedBy = "eventDesc",cascade = CascadeType.ALL)
+	public Event getEvent() {
+		return event;
+	}
+	public void setEvent(Event event) {
+		this.event = event;
+	}
+	@OneToOne
+	@JoinColumn(name = "manager_id")
+	public Manager getMgr() {
+		return mgr;
+	}
+	public void setMgr(Manager mgr) {
+		this.mgr = mgr;
+	}
+
 	@Override
 	public String toString() {
-		return "EventDesc [eventDescId=" + eventDescId + ", eventName=" + eventName + "]";
+		return "EventDesc [eventDescId=" + eventDescId + ", eventName=" + eventName + ", eventCost=" + eventCost
+				+ ", event=" + event + ", mgr=" + mgr + "]";
 	}
+	
+	
 	
 
 }

@@ -1,5 +1,7 @@
 package com.app.pojos;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,6 +11,8 @@ public class Food
 	private Integer foodId;
 	private String foodType;
 	private foodCategory category;
+	private Event event;
+	private List<FoodSubMenu> foodSbmenuList;
 	public Food() {
 		// TODO Auto-generated constructor stub
 	}
@@ -39,6 +43,21 @@ public class Food
 	}
 	public void setCategory(foodCategory category) {
 		this.category = category;
+	}
+	@ManyToOne
+	@JoinColumn(name = "event_id")
+	public Event getEvent() {
+		return event;
+	}
+	public void setEvent(Event event) {
+		this.event = event;
+	}
+	@OneToMany(mappedBy = "food",cascade = CascadeType.ALL)
+	public List<FoodSubMenu> getFoodSbmenuList() {
+		return foodSbmenuList;
+	}
+	public void setFoodSbmenuList(List<FoodSubMenu> foodSbmenuList) {
+		this.foodSbmenuList = foodSbmenuList;
 	}
 	@Override
 	public String toString() {

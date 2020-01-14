@@ -1,5 +1,7 @@
 package com.app.pojos;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 @Entity
@@ -8,6 +10,7 @@ public class VenueCity
 {
 	private Integer venueCityId;
 	private String venueCityName;
+	private List<Location> locList;
 	public VenueCity() {
 		// TODO Auto-generated constructor stub
 	}
@@ -30,6 +33,13 @@ public class VenueCity
 	}
 	public void setVenueCityName(String venueCityName) {
 		this.venueCityName = venueCityName;
+	}
+	@OneToMany(mappedBy = "venueCity",cascade = CascadeType.ALL)
+	public List<Location> getLocList() {
+		return locList;
+	}
+	public void setLocList(List<Location> locList) {
+		this.locList = locList;
 	}
 	@Override
 	public String toString() {

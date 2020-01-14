@@ -10,6 +10,7 @@ public class Appointment
 {
 	private Integer appointmentId;
 	private Date appointmentDate;
+	private Event event;
 	public Appointment() {
 		// TODO Auto-generated constructor stub
 	}
@@ -32,6 +33,14 @@ public class Appointment
 	}
 	public void setAppointmentDate(Date appointmentDate) {
 		this.appointmentDate = appointmentDate;
+	}
+	@OneToOne
+	@JoinColumn(name = "event_id")
+	public Event getEvent() {
+		return event;
+	}
+	public void setEvent(Event event) {
+		this.event = event;
 	}
 	@Override
 	public String toString() {
