@@ -1,16 +1,23 @@
 package com.app.pojos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "VenueCity_Tb")
+@JsonIgnoreProperties(value = {"locList"})
 public class VenueCity 
 {
 	private Integer venueCityId;
 	private String venueCityName;
-	private List<Location> locList;
+	private List<Location> locList = new ArrayList<>();
 	public VenueCity() {
 		// TODO Auto-generated constructor stub
 	}
@@ -35,11 +42,23 @@ public class VenueCity
 		this.venueCityName = venueCityName;
 	}
 	@OneToMany(mappedBy = "venueCity",cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	public List<Location> getLocList() {
 		return locList;
 	}
 	public void setLocList(List<Location> locList) {
 		this.locList = locList;
+	}
+	//cm
+	public void addLocation(Location loc)
+	{
+		locList.add(loc);
+		loc.setVenueCity(this);
+	}
+	public void removeLocation(Location loc)
+	{
+		locList.remove(loc);
+		loc.setVenueCity(null);
 	}
 	@Override
 	public String toString() {

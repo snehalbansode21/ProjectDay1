@@ -4,13 +4,17 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "Appointment_Tb")
 public class Appointment 
 {
 	private Integer appointmentId;
+	@JsonFormat(pattern = "yyyy-MM-dd",timezone="IST")
 	private Date appointmentDate;
 	private Event event;
+	private Manager mgr;
 	public Appointment() {
 		// TODO Auto-generated constructor stub
 	}
@@ -41,6 +45,15 @@ public class Appointment
 	}
 	public void setEvent(Event event) {
 		this.event = event;
+	}
+	
+	@ManyToOne
+	@JoinColumn(name = "manager_id")
+	public Manager getMgr() {
+		return mgr;
+	}
+	public void setMgr(Manager mgr) {
+		this.mgr = mgr;
 	}
 	@Override
 	public String toString() {

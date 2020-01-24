@@ -1,11 +1,18 @@
 package com.app.pojos;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "User_Tb")
+@JsonIgnoreProperties(value= {"addr","feedBackList","eventList","mgr"})
 public class User 
 {
 	private Integer userId;
@@ -16,11 +23,9 @@ public class User
 	private UserRole role;
 	private String mobNo;
 	private Address addr;
-	private List<Feedback> feedBackList;
-	private List<Event> eventList;
+	private List<Feedback> feedBackList = new ArrayList<>();
+	private List<Event> eventList = new ArrayList<>();
 	private Manager mgr;
-	private List<Report> reportList;
-	
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
@@ -110,7 +115,7 @@ public class User
 	public void setAddr(Address addr) {
 		this.addr = addr;
 	}
-	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	public List<Feedback> getFeedBackList() {
 		return feedBackList;
 	}
@@ -119,6 +124,7 @@ public class User
 		this.feedBackList = feedBackList;
 	}
 	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	public List<Event> getEventList() {
 		return eventList;
 	}
@@ -126,7 +132,7 @@ public class User
 	public void setEventList(List<Event> eventList) {
 		this.eventList = eventList;
 	}
-	@OneToOne(mappedBy = "user",cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "user",cascade = CascadeType.ALL,orphanRemoval = true)
 	public Manager getMgr() {
 		return mgr;
 	}
@@ -134,21 +140,54 @@ public class User
 	public void setMgr(Manager mgr) {
 		this.mgr = mgr;
 	}
-	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-	public List<Report> getReportList() {
-		return reportList;
+//cm
+	public void addAddress(Address a)
+	{
+		this.addr = a;
+		a.setUser(this);
 	}
-
-	public void setReportList(List<Report> reportList) {
-		this.reportList = reportList;
+	public void removeAddress(Address a)
+	{
+		addr = null;
+		a.setUser(null);
 	}
-
+	public void addFeedback(Feedback f)
+	{
+		feedBackList.add(f);
+		f.setUser(this);
+	}
+	public void removeFeedback(Feedback f)
+	{
+		feedBackList.remove(f);
+		f.setUser(null);
+	}
+	public void addEvents(Event e) 
+	{
+		eventList.add(e);
+		e.setUser(this);
+	}
+	public void removeEvents(Event e)
+	{
+		eventList.remove(e);
+		e.setUser(null);
+	}
+	public void addManager(Manager m)
+	{
+		this.mgr = m;
+		m.setUser(this);
+	}
+	public void removeManager(Manager m)
+	{
+		this.mgr = null;
+		m.setUser(null);
+	}
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", name=" + name + ", email=" + email + ", password=" + password
-				+ ", confirmPassword=" + confirmPassword + ", role=" + role + ", mobNo=" + mobNo + ", addr=" + addr
-				+ "]";
+		return "User [name=" + name + ", email=" + email + ", password=" + password + ", confirmPassword="
+				+ confirmPassword + ", role=" + role + ", mobNo=" + mobNo + "]";
 	}
+
+	
 
 	
 	
