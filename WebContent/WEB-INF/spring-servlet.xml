@@ -16,5 +16,6 @@
 	/>
 	<!-- import hibernate config xml file -->
 	<import resource="classpath:/hibernate-persistence.xml"/>
+	<import resource="classpath:/file-upload.xml"/>
 	
 </beans>

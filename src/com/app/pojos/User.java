@@ -9,10 +9,11 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "User_Tb")
-@JsonIgnoreProperties(value= {"addr","feedBackList","eventList","mgr"})
+@JsonIgnoreProperties(value= {"feedBackList","eventList","mgr"})
 public class User 
 {
 	private Integer userId;
@@ -107,6 +108,7 @@ public class User
 		this.mobNo = mobNo;
 	}
 	@OneToOne
+	@JsonManagedReference
 	@JoinColumn(name = "address_id")
 	public Address getAddr() {
 		return addr;

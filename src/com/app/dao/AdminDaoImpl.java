@@ -120,6 +120,29 @@ public class AdminDaoImpl implements IAdminDao {
 		sf.getCurrentSession().update(food);
 		return food;
 	}
-	
+	@Override
+	public FoodSubMenu deleteFoodSubMenu(FoodSubMenu foodSubMenu) {
+		sf.getCurrentSession().delete(foodSubMenu);
+		return foodSubMenu;
+	}
+	@Override
+	public VenueCity deleteVenueCity(VenueCity venueCity) {
+		sf.getCurrentSession().delete(venueCity);
+		return venueCity;
+	}
+	@Override
+	public Location editLocation(Location location) {
+		 sf.getCurrentSession().update(location);
+		 return location;
+	}
+	@Override
+	public Location getLocationById(int loc_id) {
+		return sf.getCurrentSession().get(Location.class, loc_id);
+	}
+	@Override
+	public Location deleteLocation(Location location) {
+		sf.getCurrentSession().delete(location);
+		return location;
+	}
 
 }

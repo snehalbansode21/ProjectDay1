@@ -106,5 +106,30 @@ public class AdminServiceImpl implements IAdminService {
 	public Food updateFoodType(Food food) {
 		return adminDao.updateFoodType(food);
 	}
+	@Override
+	public FoodSubMenu deleteFoodSubMenu(FoodSubMenu foodSubMenu) {
+		// TODO Auto-generated method stub
+		return adminDao.deleteFoodSubMenu(foodSubMenu);
+	}
+	@Override
+	public VenueCity deleteVenueCity(VenueCity venueCity) {
+		// TODO Auto-generated method stub
+		return adminDao.deleteVenueCity(venueCity);
+	}
+	@Override
+	public Location editLocation(Location location) {
+		// TODO Auto-generated method stub
+		return adminDao.editLocation(location);
+	}
+	@Override
+	public Location getLocationById(int loc_id) {
+		// TODO Auto-generated method stub
+		return adminDao.getLocationById(loc_id);
+	}
+	@Override
+	public Location deleteLocation(Location location) {
+		// TODO Auto-generated method stub
+		return adminDao.deleteLocation(location);
+	}
 
 }

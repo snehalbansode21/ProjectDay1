@@ -9,6 +9,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "EventDesc_Tb")
@@ -71,7 +72,7 @@ public class EventDesc
 	public Manager getMgr() {
 		return mgr;
 	}
-	
+	//@JsonManagedReference
 	public void setMgr(Manager mgr) {
 		this.mgr = mgr;
 	}

@@ -12,14 +12,14 @@ public class Location
 	private Integer locationId;
 	private String locationName;
 	private double locationCost;
-	private String locationImage;
+	private byte[] locationImage;
 	private Event event;
 	private VenueCity venueCity;
 	public Location() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Location(String locationName, double locationCost, String locationImage) {
+	public Location(String locationName, double locationCost, byte[] locationImage) {
 		super();
 		this.locationName = locationName;
 		this.locationCost = locationCost;
@@ -49,10 +49,11 @@ public class Location
 	public void setLocationCost(double locationCost) {
 		this.locationCost = locationCost;
 	}
-	public String getLocationImage() {
+	@Lob
+	public byte[] getLocationImage() {
 		return locationImage;
 	}
-	public void setLocationImage(String locationImage) {
+	public void setLocationImage(byte[] locationImage) {
 		this.locationImage = locationImage;
 	}
 	@OneToOne(mappedBy = "loc",cascade = CascadeType.ALL)

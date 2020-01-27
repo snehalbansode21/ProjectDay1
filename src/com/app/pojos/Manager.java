@@ -5,11 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "Manager_Tb")
-@JsonIgnoreProperties(value = {"eventDesc","appointmentList"})
+@JsonIgnoreProperties(value = {"appointmentList","eventDesc"})
 public class Manager {
 	private Integer managerId;
 	private User user;
@@ -42,6 +45,8 @@ public class Manager {
 		return eventDesc;
 	}
 
+	
+	//@JsonBackReference 
 	public void setEventDesc(EventDesc eventDesc) {
 		this.eventDesc = eventDesc;
 	}

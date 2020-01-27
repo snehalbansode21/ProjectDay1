@@ -33,4 +33,9 @@ public interface IAdminDao {
 	EventDesc updateEventDesc(EventDesc ed);
 	EventDesc getEventDescById(int eventDescId);
 	Food updateFoodType(Food food);
+	FoodSubMenu deleteFoodSubMenu(FoodSubMenu foodSubMenu);
+	VenueCity deleteVenueCity(VenueCity venueCity);
+	Location getLocationById(int loc_id);
+	Location editLocation(Location location);
+	Location deleteLocation(Location location);
 }

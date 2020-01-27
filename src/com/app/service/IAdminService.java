@@ -33,4 +33,9 @@ public interface IAdminService {
 	EventDesc updateEventDesc(EventDesc ed);
 	EventDesc getEventDescById(int eventDescId);
 	Food updateFoodType(Food food);
+	FoodSubMenu deleteFoodSubMenu(FoodSubMenu foodSubMenu);
+	VenueCity deleteVenueCity(VenueCity venueCity);
+	Location editLocation(Location location);
+	Location getLocationById(int loc_id);
+	Location deleteLocation(Location location);
 }

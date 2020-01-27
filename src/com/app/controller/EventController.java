@@ -5,16 +5,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.app.pojos.Event;
 import com.app.pojos.EventDesc;
+import com.app.pojos.Food;
+import com.app.pojos.FoodSubMenu;
 import com.app.pojos.Location;
 import com.app.pojos.User;
 import com.app.pojos.VenueCity;
+import com.app.service.IAdminService;
 import com.app.service.IClientService;
 import com.app.service.IEventService;
 
@@ -27,6 +32,8 @@ public class EventController
      private IEventService eventService;
 	 @Autowired
 	 private IClientService clientService;
+	 @Autowired 
+	 private IAdminService adminService;
 	 
 	
 	 @PostMapping("/bookanevent/{user_id}/{eventdesc_id}/{loc_id}")
@@ -66,5 +73,34 @@ public class EventController
 			 return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	 }
+	 @GetMapping("getfoodsubmenubyid/{foodSubMenuId}")
+	 public ResponseEntity<?> getFoodSubMenuById(@PathVariable int foodSubMenuId)
+	 {
+		 System.out.println("in getFoodSubMenuById()");
+		 try {
+			 return new ResponseEntity<FoodSubMenu>(eventService.getFoodSubMenuById(foodSubMenuId), HttpStatus.OK);
+		 } catch (RuntimeException e) {
+			e.printStackTrace();
+			return new ResponseEntity<Void>( HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	 }
+	 
+	 @PutMapping("/editfoodsubmenu/{foodId}")
+	 public ResponseEntity<?> editFoodSubMenu(@RequestBody FoodSubMenu foodSubMenu,@PathVariable int foodId)
+	 {
+		 System.out.println("in editFoodSubMenu()");
+		 Food food = adminService.getFoodTypeById(foodId);
+		 FoodSubMenu foodsubmenu = eventService.getFoodSubMenuById(foodSubMenu.getFoodSubMenuId());
+		 foodsubmenu.setCost(foodSubMenu.getCost());
+		 foodsubmenu.setFood(food);
+		 foodsubmenu.setSubMenu(foodSubMenu.getSubMenu());
+		 try {
+			 return new ResponseEntity<FoodSubMenu> (eventService.editFoodSubMenu(foodsubmenu), HttpStatus.OK);
+		 } catch (RuntimeException e) {
+			e.printStackTrace();
+			return new ResponseEntity<Void> (HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	 }
+	
 	 
 }
